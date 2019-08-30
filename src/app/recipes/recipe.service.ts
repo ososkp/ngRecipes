@@ -8,7 +8,8 @@ import { RepositoryService } from '../services/repository.service';
 @Injectable()
 export class RecipeService extends RepositoryService {
   recipesChanged = new Subject<Recipe[]>();
-
+  private recipes: Recipe[] = [];
+/*
   private recipes: Recipe[] = [
     new Recipe(
       'Tasty Schnitzel',
@@ -31,8 +32,13 @@ export class RecipeService extends RepositoryService {
         new Ingredient('Meat', 1)
       ])
   ];
-
+*/
   constructor (private shoppingListService: ShoppingListService) { super(); }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.save(this.recipes, this.recipesChanged);
+  }
 
   getRecipes () {
     return this.recipes.slice();  // slice() to return a copy, not a reference to the original
