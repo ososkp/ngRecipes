@@ -9,7 +9,7 @@ import { RecipesResolverService } from './recipes-resolver.service';
 
 const routes: Routes = [
   {
-    path: 'recipes',
+    path: '',
     component: RecipesComponent,  // Make sure this component is declared in the module
     canActivate: [AuthGuard],
     children: [
