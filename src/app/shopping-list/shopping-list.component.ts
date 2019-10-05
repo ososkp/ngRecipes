@@ -5,7 +5,7 @@ import { Ingredient } from '../shared/ingredient.model';
 import { Observable } from 'rxjs';
 import { LoggingService } from '../logging.service';
 import * as ShoppingListActions from './store/shopping-list.actions';
-import * as fromShoppingList from './store/shopping-list.reducer';
+import * as fromApp from '../store/app.reducer';
 
 @Component({
   selector: 'app-shopping-list',
@@ -17,7 +17,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   constructor(private loggingService: LoggingService,
               // Store type is reducer (key, from Module) and what it yields (value)
-              private store: Store<fromShoppingList.AppState>) { }  // Import app state as seen from shopping list reducer only, which is all we care about here
+              private store: Store<fromApp.AppState>) { }  // Import app state as seen from shopping list reducer only, which is all we care about here
 
   ngOnInit() {
     this.ingredients = this.store.select('shoppingList')
