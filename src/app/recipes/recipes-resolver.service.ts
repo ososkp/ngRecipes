@@ -1,23 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+import { take, map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 import { Recipe } from './recipe.model';
-import { DataStorageService } from '../shared/data-storage.service';
-import { RecipeService } from './recipe.service';
+import * as fromApp from '../store/app.reducer';
+import * as RecipesActions from '../recipes/store/recipe.actions';
 
 @Injectable({providedIn: 'root'})
 export class RecipesResolverService implements Resolve<Recipe[]> {
-  constructor(private dataStorageService: DataStorageService,
-              private recipeService: RecipeService) {}
+  constructor(private store: Store<fromApp.AppState>,
+              private actions$: Actions) {}
 
   resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const recipes = this.recipeService.getRecipes();
+    return this.store.select('recipes').pipe(
+      take(1),
+      map(recipesState => {
+        return recipesState.recipes;
+      }),
+      switchMap(recipes => {
+        // Only send a request if we don't have local recipes
+        if (recipes.length === 0) {
+          this.store.dispatch(new RecipesActions.FetchRecipes());
+          // The resolver dispatchs, but then waits for SET_RECIPES to happen
+          // Ensuring we won't load the page before we have the recipes
+          return this.actions$.pipe(
+            ofType(RecipesActions.SET_RECIPES),
+            take(1)
+          ); // Take 1 then unsubscribe
+        } else {
+          return of(recipes);
+        }
+      })
+    );
 
-    if (recipes.length === 0) {
-    // Don't need to subscribe because resolver does it for you
-      return this.dataStorageService.fetchRecipes();
-    } else {
-      return recipes;
-    }
   }
 }
