@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onFetchData () {
+    this.store.dispatch(new RecipeActions.FetchRecipes());
   }
 
   onLogout () {
