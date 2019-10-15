@@ -3,6 +3,7 @@ import { ServerModule } from '@angular/platform-server';
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
+// Enables lazy loading with Universal
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 
 @NgModule({
