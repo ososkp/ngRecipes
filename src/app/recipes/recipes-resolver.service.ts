@@ -14,7 +14,7 @@ export class RecipesResolverService implements Resolve<Recipe[]> {
   constructor(private store: Store<fromApp.AppState>,
               private actions$: Actions) {}
 
-  resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.store.select('recipes').pipe(
       take(1),
       map(recipesState => {
@@ -24,7 +24,7 @@ export class RecipesResolverService implements Resolve<Recipe[]> {
         // Only send a request if we don't have local recipes
         if (recipes.length === 0) {
           this.store.dispatch(new RecipesActions.FetchRecipes());
-          // The resolver dispatchs, but then waits for SET_RECIPES to happen
+          // The resolver dispatches, but then waits for SET_RECIPES to happen
           // Ensuring we won't load the page before we have the recipes
           return this.actions$.pipe(
             ofType(RecipesActions.SET_RECIPES),

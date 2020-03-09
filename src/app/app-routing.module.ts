@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router'
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/recipes', pathMatch: 'full' },
@@ -24,7 +24,7 @@ const appRoutes: Routes = [
     loadChildren: () => import('./auth/auth.module')
       .then(m => m.AuthModule)
   }
-]
+];
 
 @NgModule({
   imports: [

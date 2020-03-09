@@ -37,11 +37,12 @@
     "bootstrap": "^3.4.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.4.0",
+    "serialize-javascript": "^3.0.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.802.1",
+    "@angular-devkit/build-angular": "^0.900.5",
     "@angular/cli": "~8.2.1",
     "@angular/compiler-cli": "~8.2.0",
     "@angular/language-service": "~8.2.0",
